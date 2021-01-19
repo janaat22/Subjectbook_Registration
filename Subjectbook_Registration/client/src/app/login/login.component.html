@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Subjectbook Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+        <div class="container">
+          <div class="navbar-brand">SubjectBook</div>
+        </div>
+    </div>
+    <div class = "jumbotron">
+        <form>
+            <div class = "form-group">
+                <fieldset class = "form-group">
+                    <legend>LOGIN</legend>
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="email" placeholder="Enter email">
+                </fieldset>
+                <fieldset class = "form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" name="pass" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="password">
+                </fieldset>
+                <fieldset class = "form-group">
+                    <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+                </fieldset>
+            </div>
+           
+            <div class="text-center p-t-136">
+                <a href="javascript:;" (click)="route()">
+                <b>	Create your Account<span>&nbsp;&nbsp;-></span></b>
+                
+                </a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

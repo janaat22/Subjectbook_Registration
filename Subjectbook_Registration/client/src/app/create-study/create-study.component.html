@@ -1,0 +1,280 @@
+<html>
+    <head>
+      <title>Subjectbook Registration</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    </head>
+
+    <body data-gr-c-s-loaded = "true">
+        <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+            <div class="container">
+              <div class="navbar-brand">SubjectBook</div>
+
+              <a class="navbar-brand" href="../" style="text-align: right;">Logout</a>
+
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+        <div class= "container">
+            <h3 class="page-header"> Create Study</h3>
+            <br>
+
+            <form (submit) = "uploadStudyData()">
+                <!-- <div class = "form-group">
+                    <label>Study ID</label>
+                    <input type="text" [(ngModel)] = "_id" name = "_id" class = "form-control" required>
+                </div>        -->                
+                <div class = "form-group">
+                    <label>Study Name</label>
+                    <input type="text" [(ngModel)] = "study_name" name = "study_name" class = "form-control">
+                </div>
+                <div class = "form-group">
+                  <label>Study key</label>
+                  <input type="text" [(ngModel)] = "study_key" name = "study_key" class = "form-control">
+                </div>
+                <!-- <div class = "form-group">
+                    <label>Study Protocol</label>
+                    <input type="text" [(ngModel)] = "study_protocol" name = "study_protocol" class = "form-control">
+                </div> -->
+                <div class="form-group">
+                  <label for="study_type">Study Type</label>
+                  <select [(ngModel)] = "study_type" class="form-control" name="study_type">
+                    <option value = "PARALLEL_REPEAT">Parallel Repetitive</option>
+                    <option value = "PARALLEL_NON_REPEAT">Parallel Non-Repetitive</option>
+                    <!-- <option>Crossover Repetitive</option>
+                    <option>Crossover Non-Repetitive</option> -->
+                  </select>
+                </div>
+                <!-- <div class = "form-group">
+                    <label>Study Type</label>
+                    <input type="text" [(ngModel)] = "study_type" name = "study_type" class = "form-control">
+                </div> -->
+                <br>
+                <!-- block to let user add new variable -->
+                <!-- <div class="card border-primary mb-3" style="max-width: 80rem;">
+                  <div class="card-header">Add New Variable</div>
+                  <div class="card-body">
+                <div class = "form-group">
+                  
+                  <label>Variable Name</label>
+                  <input type="text" id="variableName" name="variableName" [(ngModel)] = "variableName" class = "form-control">
+                  <label>Measurement Unit</label>
+                  <input type="text" id="measurementUnit" name="measurementUnit" [(ngModel)] = "measurementUnit" class = "form-control">
+                  <br>
+                  <button type="button" class="btn btn-success btn-xs" (click)="createVariable()">Create Variable</button>
+                </div>
+                  </div>
+                </div> -->
+
+                <div class = "form-group">
+                    <label>Explanatory Variable(s)</label>
+                    <div class="container">
+                      <div class="row">
+                        <!-- <div class="column-md-0">
+                          <input type="text" [(ngModel)] = "explanatory_variables" name = "explanatory_variables" class = "form-control">
+                        </div> -->
+                        <div class="column-md-0">
+                            <select class= "form-control" [formControl]="select_exp_Control" >
+                              <option *ngFor="let variable of variables | async" 
+                              [value]="variable.variable_name">
+                              {{variable.variable_name}}
+                              </option>          
+                            </select>
+                              <!-- <p><span>You selected: </span><b>{{selectControl.value}}</b></p> -->
+
+                        </div>                        
+                        <div class="column-md-3" style="margin-left: 20px">
+                          <button type="button" class="btn btn-success btn-xs" (click) = "add_exp_var()">Add Variable -></button>
+                        </div>
+                        <div class="column-md-0" style="margin-right: 20px">
+                            <input type="text" [formControl] = "explanatory_variables_list" name = "explanatory_variables_list" class = "form-control" style="margin-left: 20px" readonly>
+                        </div>
+                        <div class="column-md-9" style="margin-left: 20px">
+                            <button type="button" class="btn btn-success btn-xs" (click) = "add_exp_graph()">Add Graph -></button>
+                        </div>
+                        <div class="column-md-0" style="margin-right: 20px">
+                            <textarea type="text" [formControl] = "explanatory_variables_graph_list" name = "explanatory_variables_graph_list" class = "form-control" style="margin-left: 20px" cols="35" readonly></textarea>
+                        </div>
+                        <div class="column-md-9" style="margin-left: 20px">
+                          <button type="button" class="btn btn-success btn-xs" (click) = "reset_exp_var()">Reset</button>
+                        </div>
+                          
+                      </div>
+                    
+                      <br>
+                    </div>
+                    
+                </div>
+
+
+                <div class = "form-group">
+                  <label>Response Variable(s)</label>
+
+                  <div class="container">
+                    <div class="row">
+                      <div class="column-md-0">
+                        <select class= "form-control" [formControl]="select_res_Control" >
+                          <option *ngFor="let variable of variables | async" 
+                          [value]="variable.variable_name">
+                          {{variable.variable_name}}
+                        </option>
+                          </select>
+
+                    </div>                        
+                    <div class="column-md-3" style="margin-left: 20px">
+                      <button type="button" class="btn btn-success btn-xs" (click) = "add_res_var()">Add Variable -></button>
+                    </div>
+                    <div class="column-md-0" style="margin-right: 20px">
+                        <input type="text" [formControl] = "response_variables_list" name = "response_variables_list" class = "form-control" style="margin-left: 20px">
+                    </div>
+                    <div class="column-md-9" style="margin-left: 20px">
+                        <button type="button" class="btn btn-success btn-xs" (click) = "add_res_graph()">Add Graph -></button>
+                    </div>
+                    <div class="column-md-0"style="margin-right: 20px">
+                        <textarea type="text" [formControl] = "response_variables_graph_list" name = "response_variables_graph_list" class = "form-control" style="margin-left: 20px" cols="35" readonly></textarea>
+                    </div>
+                    <div class="column-md-9" style="margin-left: 20px">
+                      <button type="button" class="btn btn-success btn-xs" (click) = "reset_res_var()">Reset</button>
+                    </div>
+
+                    </div>                  
+                    <br>
+                  </div>
+                </div>
+                <br>
+                
+                    <div class="container">
+ 
+                      <!-- <div class="navbar navbar-default">
+                          <div class="navbar-header">
+                              <a class="navbar-brand" href>Angular2 File Upload</a>
+                          </div>
+                      </div> -->
+                   
+                      <div class="row">
+                   
+                          <div class="col-md-3">
+                   
+                              <h4>Files Upload</h4>
+                   
+                              <!-- <div ng2FileDrop
+                                   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                                   (fileOver)="fileOverBase($event)"
+                                   [uploader]="uploader"
+                                   class="well my-drop-zone">
+                                  Base drop zone
+                              </div>
+                   
+                              <div ng2FileDrop
+                                   [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+                                   (fileOver)="fileOverAnother($event)"
+                                   [uploader]="uploader"
+                                   class="well my-drop-zone">
+                                  Another drop zone
+                              </div> -->
+                   
+                              <!-- Experiment data files -->
+                              <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+                   
+                              <!-- Single file
+                              <input type="file" ng2FileSelect [uploader]="uploader" /> -->
+                              
+                          </div>
+                   
+                          <div class="col-md-9" style="margin-bottom: 40px">
+                   
+                              <h4>Upload queue</h4>
+                              <p>Queue length: {{ uploader?.queue?.length }}</p>
+                   
+                              <table class="table">
+                                  <thead>
+                                  <tr>
+                                      <th width="50%">Name</th>
+                                      <th>Size</th>
+                                      <th>Progress</th>
+                                      <th></th>
+                                      <th>Actions</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr *ngFor="let item of uploader.queue">
+                                      <td><strong>{{ item?.file?.name }}</strong></td>
+                                      <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                      <td *ngIf="uploader.options.isHTML5">
+                                          <div class="progress" style="margin-bottom: 0;">
+                                              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                          </div>
+                                      </td>
+                                      <td class="text-center">
+                                          <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                          <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                          <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                      </td>
+                                      <td nowrap>
+                                          <button type="button" class="btn btn-success btn-xs"
+                                                  (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                              <span class="glyphicon glyphicon-upload"></span> Upload
+                                          </button>
+                                          <button type="button" class="btn btn-warning btn-xs"
+                                                  (click)="item.cancel()" [disabled]="!item.isUploading">
+                                              <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                          </button>
+                                          <button type="button" class="btn btn-danger btn-xs"
+                                                  (click)="item.remove()">
+                                              <span class="glyphicon glyphicon-trash"></span> Remove
+                                          </button>
+                                      </td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                   
+                              <div>
+                                  <div>
+                                      Queue progress
+                                      <div class="progress" style="">
+                                          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                      </div>
+                                      <br>  
+                                  </div>
+                                  <button type="button" class="btn btn-success btn-s"
+                                          (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                      <span class="glyphicon glyphicon-upload"></span> Upload all
+                                  </button>
+                                  <button type="button" class="btn btn-warning btn-s"
+                                          (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                                  </button>
+                                  <button type="button" class="btn btn-danger btn-s"
+                                          (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                      <span class="glyphicon glyphicon-trash"></span> Remove all
+                                  </button>
+                              </div>
+                   
+                          </div>
+                   
+                      </div>
+                   
+                      <br><br>
+                   
+                      <!-- <div class="row">
+                          <div class="col-md-12">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading">Response</div>
+                                  <div class="panel-body">
+                                    {{ response }}
+                                  </div>
+                              </div>
+                          </div>
+                      </div> -->
+                  </div>
+                <!-- <input type="submit" class="btn btn btn-success" value="Create Study"> -->
+                <button type="button" class="btn btn btn-success" (click)="uploadStudyData()" >Create Study</button>
+        
+            </form>
+        </div> 
+    </body>
+</html>
